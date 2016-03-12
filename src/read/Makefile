@@ -7,15 +7,15 @@ CPPFLAGS=
 CFLAGS= -Wall -Wextra -std=c99 -O0 -g
 LDFLAGS=
 LDLIBS=
-SRC= test.c lecture.c main.c
+SRC= test.c read.c main.c
 OBJ=$(SRC:.c=.o)
-BIN= lecture
+BIN= read
 
 all: $(OBJ)
-	$(CC) $(CFLAGS) -o lecture $(OBJ)
+	$(CC) $(CFLAGS) -o read $(OBJ)
 
 check: clean all
-	./lecture fichier.asm
+	./read fichier.asm
  
 clean:
 	rm -f *.o $(BIN)

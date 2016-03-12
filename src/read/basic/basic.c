@@ -49,11 +49,12 @@ int conv_bin(char *num){
   }
   return res;
 }
-// TEST
+/* TEST
 int main (){
   char *str="#$1A";
   //printf("%c\n",str[strlen(str)-1]);
   printf("%d\n",get_number(str));
   return 0;
 }
+*/
 

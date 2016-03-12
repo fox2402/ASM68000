@@ -12,7 +12,7 @@ OBJ=$(SRC:.c=.o)
 BIN= mem
 
 all: $(OBJ)
-	$(CC) $(CFLAGS) -o mem $(OBJ)
+#	$(CC) $(CFLAGS) -o mem $(OBJ)
 
 check: clean all
 	./mem

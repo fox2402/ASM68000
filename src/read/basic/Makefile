@@ -12,7 +12,7 @@ OBJ=$(SRC:.c=.o)
 BIN= basic
 
 all: $(OBJ)
-	$(CC) $(CFLAGS) -o basic $(OBJ)
+#	$(CC) $(CFLAGS) -o basic $(OBJ)
 
 check: clean all
 	./basic

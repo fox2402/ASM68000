@@ -7,18 +7,15 @@ CPPFLAGS=
 CFLAGS= -Wall -Wextra -std=c99 -O0 -g
 LDFLAGS=
 LDLIBS=
-SRC= 
+SRC= stdcpu.c 
 OBJ=$(SRC:.c=.o)
 BIN=
-DIRS= src src/read src/read/basic src/read/memory
 
-all:
-	-for d in $(DIRS); do (cd $$d; $(MAKE)); done
-#	$(MAkE) -C
+all: $(OBJ)
 
 check: clean all
  
 clean:
-	-for d in $(DIRS); do (echo "\nClean :" $$d; cd $$d; $(MAKE) clean ); done
+	rm -f *.o $(BIN)
  
 # END

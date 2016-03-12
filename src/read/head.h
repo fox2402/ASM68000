@@ -4,6 +4,8 @@
 # include <math.h>
 # include <err.h>
 # include "basic/basic.h"
+# include "memory/mem.h"
+# include "../stdcpu.h"
 
 char **arg_init();
 void arg_free(char **arg);
