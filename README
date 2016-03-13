@@ -1,1 +1,4 @@
-Nothing much to say right now *sigh*
+Do :
+- "make" to compile into binary file "read".
+- "make clean" to clean.
+- "make check" to clean, compile, and run (./read file.asm).

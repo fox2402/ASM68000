@@ -17,7 +17,7 @@ all: $(OBJ) $(OBJ2)
 	cp read ../../
 
 check: clean all
-	./read fichier.asm
+	./read file.asm
  
 clean:
 	rm -f *.o $(BIN)

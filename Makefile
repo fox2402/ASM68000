@@ -17,7 +17,7 @@ all:
 #	$(MAkE) -C
 
 check: clean all
-	./read fichier.asm 
+	./read file.asm 
 clean:
 	-for d in $(DIRS2); do (echo "\nClean :" $$d; cd $$d; $(MAKE) clean ); done
  
