@@ -1,5 +1,4 @@
 # include "basic.h"
-# include <math.h>
 # include "../head.h"
 # include <ctype.h>
 
