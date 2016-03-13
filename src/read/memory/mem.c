@@ -1,7 +1,7 @@
 # include "mem.h"
 # include "../head.h"
 
-static void dumpMem (char *p, unsigned int s) {
+void dumpMem (char *p, unsigned int s) {
     unsigned int i;
     unsigned char c[0x10];
 //    printf (">>      ");

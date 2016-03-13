@@ -9,10 +9,12 @@ LDFLAGS=
 LDLIBS=
 SRC= test.c read.c main.c
 OBJ=$(SRC:.c=.o)
-BIN= read
+OBJ2= memory/mem.o basic/basic.o ../stdcpu.o
+BIN= read ../../read
 
-all: $(OBJ)
-	$(CC) $(CFLAGS) -o read $(OBJ)
+all: $(OBJ) $(OBJ2)
+	$(CC) $(CFLAGS) -o read $(OBJ) $(OBJ2)
+	cp read ../../
 
 check: clean all
 	./read fichier.asm

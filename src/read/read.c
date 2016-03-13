@@ -17,12 +17,17 @@ void arg_free(char **arg){
 }
 
 ssize_t read_line(FILE *file, char **arg){
-  char *line=NULL;
-  size_t j=0,len;
-  ssize_t r,i=0;
+  char *line = NULL;
+  size_t j = 0, len;
+  ssize_t r, i = 0 ;
   if ((r = getline(&line, &len, file)) != -1) {
-    while(i<r){
-      size_t k=0;
+    if(line[i] == ' ') {
+      arg[0][0] = '\0';
+      j++;
+      i++;
+    }
+    while(i < r){
+      size_t k = 0;
       while(line[i]==' '){
         i++;
       }
@@ -38,10 +43,17 @@ ssize_t read_line(FILE *file, char **arg){
         }
       }
       arg[j][k]='\0';
+      if(arg[j][0]=='\0'){
+	free(arg[j]);
+	arg[j]=NULL;
+      }
       i++;
       j++;
     }
-    arg[j]=NULL;
+    for(;j < 20; j++) {
+      free(arg[j]);
+      arg[j] = NULL;
+    }
   }
   return r;
 }
