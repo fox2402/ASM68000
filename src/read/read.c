@@ -1,5 +1,4 @@
 # include "head.h"
-# include <stdio.h>
 
 char **arg_init(){
   size_t size = 20,s = 20;

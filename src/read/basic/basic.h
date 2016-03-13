@@ -1,4 +1,4 @@
-
+# include <math.h>
 
 int conv_hex(char *num);
 int conv_bin(char *num);

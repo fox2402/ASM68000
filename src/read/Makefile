@@ -12,7 +12,7 @@ OBJ=$(SRC:.c=.o)
 OBJ2= memory/mem.o basic/basic.o ../stdcpu.o
 BIN= read ../../read
 
-all: $(OBJ)
+all: $(OBJ) $(OBJ2)
 	$(CC) $(CFLAGS) -o read $(OBJ) $(OBJ2)
 	cp read ../../
 

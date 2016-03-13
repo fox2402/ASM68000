@@ -1,7 +1,6 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# include <math.h>
 # include <err.h>
 # include "basic/basic.h"
 # include "memory/mem.h"
