@@ -4,7 +4,7 @@
 # CC=gcc -fsanitize=address
 CC=gcc
 CPPFLAGS=
-CFLAGS= -Wall -Werror -Wextra -std=c99 -O0 -g
+CFLAGS= -Wall -Werror -Wextra -std=c99 -O0 -g -lm
 LDFLAGS=
 LDLIBS=
 SRC= basic.c
