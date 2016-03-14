@@ -45,11 +45,12 @@ int main(int argc, char *argv[]){
       char **arg = arg_init();
       r = read_line(file2,arg);
       if((arg[0]||arg[1]||arg[3]||arg[4]) && r) {
-        test_read(arg); // exec_line()
+        test_read(arg);
       }
       arg_free(arg);
     } while(r && (r!=-1));
-    fclose(file);
+    fclose(file2);
+    free(l);
     printf("\n");
 //    cpu.RAM[0]=100; TEST
     DUMPMEM(cpu.RAM, 1000*sizeof(uint16_t));
