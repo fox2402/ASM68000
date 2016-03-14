@@ -52,7 +52,7 @@ int main(int argc, char *argv[]){
     fclose(file);
     printf("\n");
 //    cpu.RAM[0]=100; TEST
-    DUMPMEM(cpu.RAM, 2000*sizeof(uint16_t));
+    DUMPMEM(cpu.RAM, 1000*sizeof(uint16_t));
   }
   else
     err(1,"no arg");
