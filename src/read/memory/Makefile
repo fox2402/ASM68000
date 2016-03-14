@@ -9,10 +9,11 @@ LDFLAGS=
 LDLIBS=
 SRC= mem.c
 OBJ=$(SRC:.c=.o)
+OBJ2= ../../stdcpu.o
 BIN= mem
 
-all: $(OBJ)
-#	$(CC) $(CFLAGS) -o mem $(OBJ)
+all: $(OBJ) $(OBJ2)
+	$(CC) $(CFLAGS) -o mem $(OBJ) $(OBJ2)
 
 check: clean all
 	./mem

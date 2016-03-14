@@ -29,22 +29,17 @@ void dumpMem (char *p, unsigned int s) {
 #define DUMPMEM(x,s) do{printf("%s:\n",#x);dumpMem((char*)(&x),s);}while(0)
 
 /* TEST
-typedef struct {
-    char c;
-    int i;
-    char c2[6];
-} tStruct;
 
 int main (void) {
-    int i = 42;
-    char *s = "Hello world !";
-    tStruct z;
-    z.c = 'a'; z.i = 42; strcpy (z.c2,"Hello");
+  int i = 42;
+  char *s = "Hello world !";
 
-    DUMPINT (i);
-    DUMPSTR (s);
-    DUMPMEM (z,sizeof(z));
+  DUMPINT (i);
+  DUMPSTR (s);
 
-    return 0;
+  struct cpu z=*get_cpu();
+  DUMPMEM (z.RAM,sizeof(uint16_t));
+  delete_core(&z);
+  return 0;
 }
 */
