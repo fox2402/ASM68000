@@ -2,7 +2,7 @@
 # include "test.h"
 
 
-void push_label(struct label *l, char *subroutine, uint32_t adress) {
+struct label *push_label(struct label *l, char *subroutine, uint32_t adress) {
   struct label *res=malloc(sizeof(struct label));
   res->subroutine = subroutine;
   res->adress = adress;
@@ -14,6 +14,7 @@ void push_label(struct label *l, char *subroutine, uint32_t adress) {
   }
   else
     l = res;
+  return l;
 }
 
 int main(int argc, char *argv[]){
@@ -22,7 +23,7 @@ int main(int argc, char *argv[]){
     FILE *file = fopen(argv[1], "r");
     struct cpu cpu = *get_cpu();
     uint32_t pc = 0;
-    struct label *l = malloc(sizeof(struct label));
+    struct label *l = NULL;
     do { // 1st parsing label
       char **arg = arg_init();
       r = read_line(file,arg);
@@ -32,7 +33,7 @@ int main(int argc, char *argv[]){
 	  pc = conv_hex(arg[3]);
 	}
 	if(arg[0]){
-          push_label(l,arg[0],pc);
+          l = push_label(l,arg[0],pc);
 	}
       }
       arg_free(arg);
