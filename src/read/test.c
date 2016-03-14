@@ -15,7 +15,7 @@ void test_read(char **arg){
 void read_label(struct label *l) {
   printf("List of labels : \n");
   for(struct label *cur = l; cur; cur = cur->next) {
-    printf("(%s, $%04x) -> ", cur->subroutine, cur->adress);
+    printf("(%s , $%x) -> ", cur->subroutine, cur->adress);
   }
   printf("\n");
 }

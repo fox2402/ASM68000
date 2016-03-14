@@ -1,6 +1,5 @@
 # include <stdlib.h>
 # include <stdint.h>
-# include <unistd.h>
 
 # ifndef STDCPU_H
 # define STDCPU_H
