@@ -29,7 +29,7 @@ int main(int argc, char *argv[]){
       if((arg[1]||arg[3]||arg[4]) && r) {
         pc += 2;
 	if(strcmp(arg[1],"org")==0){
-	  pc = conv_hex(arg[2]);
+	  pc = conv_hex(arg[3]);
 	}
 	if(arg[0]){
           push_label(l,arg[0],pc);
@@ -37,7 +37,7 @@ int main(int argc, char *argv[]){
       }
       arg_free(arg);
     } while(r && (r!=-1));
-    close(file);
+    fclose(file);
     read_label(l);
     FILE *file2 = fopen(argv[1], "r");
     printf("\nParsing : \n");
