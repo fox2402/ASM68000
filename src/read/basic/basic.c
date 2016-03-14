@@ -10,10 +10,10 @@ int get_number (char *arg) {
   int num;
   switch (arg[1]) {
     case '$' :
-      num = conv_hex(arg);
+      num = conv_hex(arg+1);
       break;
     case '%' :
-      num = conv_bin(arg);
+      num = conv_bin(arg+1);
       break;
     default :
       num = atoi(arg+1);
