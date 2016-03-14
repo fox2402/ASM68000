@@ -31,12 +31,22 @@ int main(int argc, char *argv[]){
         pc += 2; // have to move it
 	if(strcmp(arg[1],"org")==0){
 	  pc = conv_hex(arg[3]);
+<<<<<<< HEAD
+=======
+	}
+	if(arg[0]){
+          l = push_label(l,arg[0],pc);
+>>>>>>> 5de128cc0d4154f0e335a51ae94f355cf00e072d
 	}
       }
       if(arg[0]){
 	l=push_label(l,arg[0],pc);
       }
     } while(r && (r!=-1));
+<<<<<<< HEAD
+=======
+    fclose(file);
+>>>>>>> 5de128cc0d4154f0e335a51ae94f355cf00e072d
     read_label(l);
     fclose(file);
     FILE *file2 = fopen(argv[1], "r");
