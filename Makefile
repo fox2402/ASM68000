@@ -20,5 +20,5 @@ check: clean all
 	./read file.asm 
 clean:
 	-for d in $(DIRS2); do (echo "\nClean :" $$d; cd $$d; $(MAKE) clean ); done
- 
+	rm -f out.bin 
 # END
