@@ -1,12 +1,11 @@
 # include <stdlib.h>
 # include <stdint.h>
-# include <unistd.h>
 
 # ifndef STDCPU_H
 # define STDCPU_H
 
 struct cpu {
-  uint16_t RAM[8192]; // 16 mio de memoire ? ;
+  char RAM[16384]; // 16 mio de memoire ? ;
   uint32_t A[9]; //don't use after bit 23
   uint32_t D[8];
   uint16_t SR; // 8 lower = CCR 8 higher = SR

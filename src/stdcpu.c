@@ -1,10 +1,10 @@
 # include "stdcpu.h"
 
 
-struct cpu* get_cpu(void)
+static struct cpu* get_cpu(void)
 {
   int i;
-  static struct cpu* main_core = NULL;
+  struct cpu* main_core = NULL;
   if(main_core == NULL)
   {
     main_core = malloc(sizeof(struct cpu));

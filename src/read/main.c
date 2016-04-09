@@ -28,32 +28,32 @@ int main(int argc, char *argv[]){
       char **arg = arg_init();
       r = read_line(file,arg);
       if((arg[1]||arg[3]||arg[4]) && r) {
-        pc += 2;
+        pc += 2; // have to move it
 	if(strcmp(arg[1],"org")==0){
 	  pc = conv_hex(arg[3]);
 	}
-	if(arg[0]){
-          l = push_label(l,arg[0],pc);
-	}
       }
-      arg_free(arg);
+      if(arg[0]){
+	l=push_label(l,arg[0],pc);
+      }
     } while(r && (r!=-1));
-    fclose(file);
     read_label(l);
+    fclose(file);
     FILE *file2 = fopen(argv[1], "r");
     printf("\nParsing : \n");
     do { // 2nd parsing
       char **arg = arg_init();
       r = read_line(file2,arg);
       if((arg[0]||arg[1]||arg[3]||arg[4]) && r) {
-        test_read(arg); // exec_line()
+        test_read(arg);
       }
       arg_free(arg);
     } while(r && (r!=-1));
-    fclose(file);
+    fclose(file2);
+    free(l);
     printf("\n");
-//    cpu.RAM[0]=100;
-    DUMPMEM(cpu.RAM, 2000*sizeof(uint16_t));
+//    cpu.RAM[0]=100; TEST
+    DUMPMEM(cpu.RAM, 1000*sizeof(uint16_t));
   }
   else
     err(1,"no arg");
