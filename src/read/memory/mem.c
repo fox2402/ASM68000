@@ -4,11 +4,7 @@
 void dumpMem (char *p, unsigned int s) {
     unsigned int i;
     unsigned char c[0x10];
-//    printf (">>      ");
-//    for (i = 0; i < 0x10; i++) printf (" +%x",i);
-//    printf (" +");
-//    for (i = 0; i < 0x10; i++) printf ("%x",i);
-//    printf ("\n");
+
     for (i = 0; i < ((s + 15) & 0xfff0); i++) {
         if ((i % 0x10) == 0) {
             if (i != 0) printf ("  %*.*s\n", 0x10, 0x10, c);
