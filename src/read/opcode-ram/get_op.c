@@ -18,10 +18,20 @@ void optoram(char *bin, struct cpu *cpu) {
   FILE *file = fopen(bin, "r");
   int j = 0;
   ssize_t r;
+  int b = 1;
   while ((r = getline(&buf, &len, file)) != -1) {
-    for(int i = 0; i < r; i++) {
-      cpu->RAM[j] = buf[i];
-      j++;
+    for(int i=0; b; i+=4) {
+      for(int k = 0; k < 4; k++) {
+	if ((unsigned)(unsigned char)buf[i+k] != 255) {
+	  b = 0;
+	}
+      }
+      if (b) {
+        j += 4;
+      }
+    }
+    for(; j < r; j++) {
+      cpu->RAM[j] = buf[j];
     }
   }
   free(buf);
