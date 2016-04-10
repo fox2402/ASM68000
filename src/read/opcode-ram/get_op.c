@@ -3,7 +3,7 @@
 
 void get_op(char *file, char *out) {
   if(!fork()) {
-    char *arg[11] = {"asmx", "-C", "68000", "-b", "0", "-o", out, "--", file, NULL};
+    char *arg[11] = {"./asmx", "-C", "68000", "-b", "0", "-o", out, "--", file, NULL};
     execvp(arg[0], arg);
     exit(1);
     return;
