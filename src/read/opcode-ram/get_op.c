@@ -3,21 +3,26 @@
 
 void get_op(char *file, char *out) {
   if(!fork()) {
-    char *arg[7] = {"exec","asmx", "-C 68000 -b 0 -o", out, "--", file, NULL};
+    char *arg[11] = {"asmx", "-C", "68000", "-b", "0", "-o", out, "--", file, NULL};
     execvp(arg[0], arg);
-
+    exit(1);
+    return;
   }
   wait(NULL);
-  printf("Get Opcode");
+  printf("Get Opcode\n");
 }
 
-void optoram(char *bin, struct cpu cpu) {
+void optoram(char *bin, struct cpu *cpu) {
   char *buf = NULL;
-  size_t len;
+  size_t len = 0;
   FILE *file = fopen(bin, "r");
-  int r = getline(&buf, &len, file);
-  for(int i = 0; i < r; i++) {
-    cpu.RAM[i] = buf[i];
+  int j = 0;
+  ssize_t r;
+  while ((r = getline(&buf, &len, file)) != -1) {
+    for(int i = 0; i < r; i++) {
+      cpu->RAM[j] = buf[i];
+      j++;
+    }
   }
   free(buf);
   fclose(file);
