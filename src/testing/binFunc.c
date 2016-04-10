@@ -2,6 +2,8 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#include "binFunc.h"
+#include "addFam.h"
 
 void selectSubFunc(uint16_t input)
 {
@@ -34,11 +36,11 @@ void selectSubFunc(uint16_t input)
 }
 
 
-int main()
+/*int main()
 {
   selectSubFunc(0xD456);
   selectSubFunc(0x0214);
   selectSubFunc(0x9022);
   selectSubFunc(0x4313);
   return 0;
-}
+}*/
