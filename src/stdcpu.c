@@ -1,7 +1,7 @@
 # include "stdcpu.h"
 
 
-static struct cpu* get_cpu(void)
+struct cpu* get_cpu(void)
 {
   int i;
   struct cpu* main_core = NULL;

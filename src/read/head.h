@@ -11,6 +11,7 @@
 # include "basic/basic.h"
 # include "memory/mem.h"
 # include "../stdcpu.h"
+# include "opcode-ram/get_op.h"
 
 struct label {
   char *subroutine;

@@ -9,7 +9,7 @@ LDFLAGS=
 LDLIBS=
 SRC= test.c read.c main.c
 OBJ=$(SRC:.c=.o)
-OBJ2= memory/mem.o basic/basic.o ../stdcpu.o
+OBJ2= memory/mem.o basic/basic.o ../stdcpu.o opcode-ram/get_op.o
 BIN= read ../../read
 
 all: $(OBJ) $(OBJ2)
@@ -20,6 +20,6 @@ check: clean all
 	./read file.asm
  
 clean:
-	rm -f *.o $(BIN)
+	rm -f *.o $(BIN) $(OBJ2)
  
 # END

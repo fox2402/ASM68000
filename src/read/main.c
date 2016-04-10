@@ -28,7 +28,7 @@ int main(int argc, char *argv[]){
       char **arg = arg_init();
       r = read_line(file,arg);
       if((arg[1]||arg[3]||arg[4]) && r) {
-        pc += 2; // have to move it
+        pc += 2;
 	if(strcmp(arg[1],"org")==0){
 	  pc = conv_hex(arg[3]);
 	}
@@ -52,7 +52,9 @@ int main(int argc, char *argv[]){
     fclose(file2);
     free(l);
     printf("\n");
-//    cpu.RAM[0]=100; TEST
+    //cpu.RAM[1] = 'ÿ'; // TEST
+    get_op(argv[1],"out.bin");
+    optoram("out.bin",cpu);
     DUMPMEM(cpu.RAM, 1000*sizeof(uint16_t));
   }
   else
