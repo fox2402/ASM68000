@@ -13,7 +13,7 @@ struct cpu {
 };
 
 
-static struct cpu* get_cpu(void);
+struct cpu* get_cpu(void);
 void delete_core(struct cpu* c);
 
 # endif
