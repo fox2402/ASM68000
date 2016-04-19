@@ -20,14 +20,14 @@ void optoram(char *bin, struct cpu *cpu) {
   ssize_t r;
   int b = 1;
   while ((r = getline(&buf, &len, file)) != -1) {
-    for(int i=0; b; i+=4) {
-      for(int k = 0; k < 4; k++) {
+    for(int i=0; b; i+=2) {
+      for(int k = 0; k < 2; k++) {
 	if ((unsigned)(unsigned char)buf[i+k] != 255) {
 	  b = 0;
 	}
       }
       if (b) {
-        j += 4;
+        j += 2;
       }
     }
     for(; j < r; j++) {
