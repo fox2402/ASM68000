@@ -1,7 +1,6 @@
 #include <unistd.h>
-#include <stdint.h>
-#include <stdio.h>
 
+#include "reg_select.h"
 #include "stdcpu.h"
 
 uint32_t* selectReg(uint16_t input, int sel)
@@ -24,7 +23,7 @@ uint32_t* selectMod(uint16_t input)
   struct cpu* c;
   uint32_t* reg;
   uint32_t* rt;
-  //here it's MODE - REG use the selectModRE for REG - MOVE
+  //here it's MODE - REG use the selectModRE for REG - MODE
   switch(input>>3)
   {
     case(0):
