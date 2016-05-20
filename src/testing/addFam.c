@@ -2,8 +2,6 @@
 #include <stdint.h>
 #include <stdio.h>
 
-
-#include "addFam.h"
 #include "stdcpu.h"
 #include "op_to_func.h"
 
@@ -37,14 +35,14 @@ void addF(uint16_t input)
     //ADD 
     case(0x0000):
       box->mask = 0xFFFFFF00;
-      box->src = regSelect(1,(tmp & 0x0E00)>>8);
+      box->src = regSelect(1,tmp & 0x0E00);
       box->dst = modSelect(input,1, &op);
       //add(box->mask, box->src, box->dst);
       *(box->dst) += op;
       break;
     case(0x0040):
       box->mask = 0xFFFF0000;
-      box->src = regSelect(1,(tmp & 0x0E00)>>8;
+      box->src = regSelect(1,tmp & 0x0E00);
       box->dst = modSelect(input,1, &op);
       //add(box->mask, box->src, box->dst);
       *(box->dst) += op;
@@ -52,7 +50,7 @@ void addF(uint16_t input)
       break;
     case(0x0080):
       box->mask = 0x00000000;
-      box->src = regSelect(1,(tmp & 0x0E00)>>8);
+      box->src = regSelect(1,tmp & 0x0E00);
       box->dst = modSelect(input,1, &op);
       //add(box->mask, box->src, box->dst);
       *(box->dst) += op; 
@@ -60,7 +58,7 @@ void addF(uint16_t input)
       break;
     case(0x0100):
       box->mask = 0xFFFFFF00;
-      box->dst = regSelect(1,(tmp & 0x0E00)>>8);
+      box->dst = regSelect(1,tmp & 0x0E00);
       box->src = modSelect(input,1, &op);
       //add(box->mask, box->src, box->dst);
       *(box->src) += op;
@@ -68,7 +66,7 @@ void addF(uint16_t input)
       break;
     case(0x0120):
       box->mask = 0xFFFF0000;
-      box->dst = regSelect(1,(tmp & 0x0E00)>>8);
+      box->dst = regSelect(1,tmp & 0x0E00);
       box->src = modSelect(input, 1, &op);
       //add(box->mask, box->src, box->dst);
       *(box->src) += op;
@@ -76,7 +74,7 @@ void addF(uint16_t input)
       break;
     case(0x0180):
       box->mask = 0x00000000;
-      box->dst = regSelect(1,(tmp & 0x0E00)>>8);
+      box->dst = regSelect(1,tmp & 0x0E00);
       box->src = modSelect(input, 1, &op);
       //add(box->mask, box->src, box->dst);
       *(box->src) += op
@@ -88,18 +86,17 @@ void addF(uint16_t input)
 }
 uint32_t* modSelect(uint16_t input,int slew)
 {
-  switch (input & 0x0048)
+  switch (input & 0x001C)
   {
     case(0x0000):
-      return regSelect(1,input & 0x0007);
-    case(0x0008):
-      return regSelect(1,input & 0x0007);
-    case(0x0010):
-      
-      
-    case(0x0018):
-     
-    case(0x0020):
-       
+      break;
+    case(0x0001):
+      break;
+    case(0x0002):
+      break;
+    case(0x0003):
+      break;
+    case(0x0004):
+      break;   
   }
 }
