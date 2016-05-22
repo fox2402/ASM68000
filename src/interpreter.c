@@ -63,7 +63,6 @@ void add(uint16_t opcode)
   char opmode = 0;
   char eamode = 0;
   char earegister = 0;
-  int i = 0;
   dn = (char)((opcode >> 9) & 0x7);
   opmode = (char)((opcode >> 6) & 0x7);
   eamode = (char)((opcode >> 3) & 0x7);
@@ -86,80 +85,80 @@ void add(uint16_t opcode)
   {
     if((opmode == 0) || (opmode == 1) || (opmode = 2))
     {
-      k->D[dn] = (k->D[dn] & !mask) || ((k->D[earegister] & mask) + (k->D[dn] & mask));
+      k->D[(int)dn] = (k->D[(int)dn] & !mask) || ((k->D[(int)earegister] & mask) + (k->D[(int)dn] & mask));
     }
     else
     {
-      k->D[earegister] = (k->D[earegister] & !mask) || ((k->D[dn] & mask) + (k->D[earegister] & mask));
+      k->D[(int)earegister] = (k->D[(int)earegister] & !mask) || ((k->D[(int)dn] & mask) + (k->D[(int)earegister] & mask));
     }
   }
   if (eamode == 1) //cas An
   {
     if((opmode == 0) || (opmode == 1) || (opmode = 2))
     {
-      k->D[dn] = (k->D[dn] & !mask) || ((k->A[earegister] & mask) + (k->D[dn] & mask));
+      k->D[(int)dn] = (k->D[(int)dn] & !mask) || ((k->A[(int)earegister] & mask) + (k->D[(int)dn] & mask));
     }
     else
     {
-      k->A[earegister] = (k->A[earegister] & !mask) || ((k->D[dn] & mask) + (k->A[earegister] & mask));
+      k->A[(int)earegister] = (k->A[(int)earegister] & !mask) || ((k->D[(int)dn] & mask) + (k->A[(int)earegister] & mask));
     }
   }
   if (eamode == 2) //cas (An), demande bidouillage ram car en char, ferais demain
   {
     if((opmode == 0) || (opmode == 1) || (opmode = 2))
     {
-      k->D[dn] = (k->D[dn] & !mask) || (ram_read(mask, k->A[earegister] & mask) + (k->D[dn] & mask));
+      k->D[(int)dn] = (k->D[(int)dn] & !mask) || (ram_read(mask, k->A[(int)earegister] & mask) + (k->D[(int)dn] & mask));
     }
     else
     {
-      ram_write(mask, k->A[earegister] & mask, ((k->D[dn] & mask) + (ram_read(mask, k->A[earegister]))));
+      ram_write(mask, k->A[(int)earegister] & mask, ((k->D[(int)dn] & mask) + (ram_read(mask, k->A[(int)earegister]))));
     }
   }
   if (eamode == 3) //cas (An)+
   {
     if((opmode == 0) || (opmode == 1) || (opmode = 2))
     {
-      k->D[dn] = (k->D[dn] & !mask) || (ram_read(mask, k->A[earegister] & mask) + (k->D[dn] & mask));
+      k->D[(int)dn] = (k->D[(int)dn] & !mask) || (ram_read(mask, k->A[(int)earegister] & mask) + (k->D[(int)dn] & mask));
     }
     else
     {
-      ram_write(mask, k->A[earegister] & mask, ((k->D[dn] & mask) + (ram_read(mask, k->A[earegister]))));
+      ram_write(mask, k->A[(int)earegister] & mask, ((k->D[(int)dn] & mask) + (ram_read(mask, k->A[(int)earegister]))));
     }
-    if (mask = 0xFF)
+    if (mask == 0xFF)
     {
-      k->A[earegister] = k->A[earegister] + 1;
+      k->A[(int)earegister] = k->A[(int)earegister] + 1;
     }
-    else if (mask = 0xFFFF)
+    else if (mask == 0xFFFF)
     {
-      k->A[earegister] = k->A[earegister] + 2;
+      k->A[(int)earegister] = k->A[(int)earegister] + 2;
     }
     else
     {
-      k->A[earegister] = k->A[earegister] + 4;
+      k->A[(int)earegister] = k->A[(int)earegister] + 4;
     }
   }
 
   if (eamode == 3) //cas (An)+
   {
-    if (mask = 0xFF)
+    if (mask == 0xFF)
     {
-      k->A[earegister] = k->A[earegister] - 1;
+      k->A[(int)earegister] = k->A[(int)earegister] - 1;
     }
-    else if (mask = 0xFFFF)
+    else if (mask == 0xFFFF)
     {
-      k->A[earegister] = k->A[earegister] - 2;
+      k->A[(int)earegister] = k->A[(int)earegister] - 2;
     }
     else
     {
-      k->A[earegister] = k->A[earegister] - 4;
+      k->A[(int)earegister] = k->A[(int)earegister] - 4;
     }
     if((opmode == 0) || (opmode == 1) || (opmode = 2))
     {
-      k->D[dn] = (k->D[dn] & !mask) || (ram_read(mask, k->A[earegister] & mask) + (k->D[dn] & mask));
+      k->D[(int)dn] = (k->D[(int)dn] & !mask) || (ram_read(mask, k->A[(int)earegister] & mask) + (k->D[(int)dn] & mask));
     }
     else
     {
-      ram_write(mask, k->A[earegister] & mask, ((k->D[dn] & mask) + (ram_read(mask, k->A[earegister]))));
+      ram_write(mask, k->A[(int)earegister] & mask, ((k->D[(int)dn] & mask) + (ram_read(mask, k->A[(int)earegister]))));
     }
   }
 }
