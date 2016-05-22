@@ -4,7 +4,7 @@
 struct cpu* get_cpu(void)
 {
   int i;
-  struct cpu* main_core = NULL;
+  static struct cpu* main_core = NULL;
   if(main_core == NULL)
   {
     main_core = malloc(sizeof(struct cpu));
