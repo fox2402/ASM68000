@@ -1,6 +1,7 @@
 #include<stdint.h>
 #include<stdlib.h>
-#include<stdcpu.h>
+#include"stdcpu.h"
+#include"acces_ram.h"
 
 /*void ccr(uint32_t mask, uint32_t* src, uint32_t* dst, uint32_t rslt)
 {
@@ -111,7 +112,7 @@ void add(uint16_t opcode)
     }
     else
     {
-      ram_write(mask, k->A[earegister] & mask, ((k->D[dn] & mask) + (ram_read(mask, [k->A[earegister]]))));
+      ram_write(mask, k->A[earegister] & mask, ((k->D[dn] & mask) + (ram_read(mask, k->A[earegister]))));
     }
   }
   if (eamode == 3) //cas (An)+
@@ -122,7 +123,7 @@ void add(uint16_t opcode)
     }
     else
     {
-      ram_write(mask, k->A[earegister] & mask, ((k->D[dn] & mask) + (ram_read(mask, [k->A[earegister]]))));
+      ram_write(mask, k->A[earegister] & mask, ((k->D[dn] & mask) + (ram_read(mask, k->A[earegister]))));
     }
     if (mask = 0xFF)
     {
@@ -158,14 +159,14 @@ void add(uint16_t opcode)
     }
     else
     {
-      ram_write(mask, k->A[earegister] & mask, ((k->D[dn] & mask) + (ram_read(mask, [k->A[earegister]]))));
+      ram_write(mask, k->A[earegister] & mask, ((k->D[dn] & mask) + (ram_read(mask, k->A[earegister]))));
     }
   }
 }
 
 
 
-void sub(uint32_t mask, uint32_t* src, uint32_t* dst)
+/*void sub(uint32_t mask, uint32_t* src, uint32_t* dst)
 {
   uint32_t src2 = src & mask;
   uint32_t dst2 = dst & mask;
@@ -224,5 +225,5 @@ void bne(uint32_t addr)
   {
     k->PC = addr;
   }
-}
+}*/
 
