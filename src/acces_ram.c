@@ -1,3 +1,5 @@
+#include "acces_ram.h"
+
 uint32_t ram_read(uint32_t mask, int add)
 {
   struct cpu* k = get_cpu();

@@ -4,7 +4,8 @@
 struct cpu* get_cpu(void)
 {
   int i;
-  static struct cpu* main_core = NULL;
+  extern struct cpu *cp;
+  struct cpu* main_core = cp;
   if(main_core == NULL)
   {
     main_core = malloc(sizeof(struct cpu));
@@ -20,10 +21,10 @@ struct cpu* get_cpu(void)
     {
       main_core->RAM[i] = 0;
     }
-  }
   return main_core;
-
-
+  } else {
+    return cp;
+  }
 }
 void delete_core(struct cpu* c)
 {
