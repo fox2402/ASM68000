@@ -1,4 +1,5 @@
-#include<stdin.h>
+#include<stdint.h>
+#include<stdlib.h>
 #include<stdcpu.h>
 
 /*void ccr(uint32_t mask, uint32_t* src, uint32_t* dst, uint32_t rslt)
@@ -54,49 +55,115 @@ void move(uint32_t mask, uint32_t* src, uint32_t* dst)
   *dst = *dst | dst2;
 }
 
-void add(uint32_t mask, uint32_t* src, uint32_t* dst)
+void add(uint16_t opcode)
 {
-  //struct cpu* k = get_cpu();
-  //int i =0;
-  //uint32_t src3 = *src;
-  //uint32_t dst3 = *dst;
-  uint32_t src2 = src & mask;
-  uint32_t dst2 = dst & mask;
-  dst2 = dst2+src2;
-  mask = !mask;
-  *dst = mask & *dst;
-  *dst = *dst | dst2;
-  /*if (!dst2)
+  //recuperer les bits avec des bitwise, en deduire les modes d'addressage et les valeurs, faire le calcul
+  char dn = 0;
+  char opmode = 0;
+  char eamode = 0;
+  char earegister = 0;
+  int i = 0;
+  dn = (char)((opcode >> 9) & 0x7);
+  opmode = (char)((opcode >> 6) & 0x7);
+  eamode = (char)((opcode >> 3) & 0x7);
+  earegister = (char)(opcode & 0x7);
+  struct cpu* k = get_cpu();
+  uint32_t mask = 0;
+  if ((opmode == 0) || (opmode == 4))
   {
-    //z a 1
+    mask = 0xFF;
+  }
+  else if ((opmode == 1) || (opmode == 5))
+  {
+    mask = 0xFFFF;
   }
   else
   {
-    //z a 0
+    mask = 0xFFFFFFFF;
   }
-  while (mask != 0)
+  if (eamode == 0) //cas Dn
   {
-    i++;
-    mask = mask >>1;
-  }
-  if(i < 32)
-  {
-    while(i>0)
+    if((opmode == 0) || (opmode == 1) || (opmode = 2))
     {
-      src3 = src3>>1;
-      dst3 = dst3>>1;
-      dst2 = dst2>>1;
-    }
-    //n = rslt
-    if(src3 == dst3 && dst2 != dst3)
-    {
-      //v a 1
+      k->D[dn] = (k->D[dn] & !mask) || ((k->D[earegister] & mask) + (k->D[dn] & mask));
     }
     else
     {
+      k->D[earegister] = (k->D[earegister] & !mask) || ((k->D[dn] & mask) + (k->D[earegister] & mask));
     }
-  }*/
+  }
+  if (eamode == 1) //cas An
+  {
+    if((opmode == 0) || (opmode == 1) || (opmode = 2))
+    {
+      k->D[dn] = (k->D[dn] & !mask) || ((k->A[earegister] & mask) + (k->D[dn] & mask));
+    }
+    else
+    {
+      k->A[earegister] = (k->A[earegister] & !mask) || ((k->D[dn] & mask) + (k->A[earegister] & mask));
+    }
+  }
+  if (eamode == 2) //cas (An), demande bidouillage ram car en char, ferais demain
+  {
+    if((opmode == 0) || (opmode == 1) || (opmode = 2))
+    {
+      k->D[dn] = (k->D[dn] & !mask) || (ram_read(mask, k->A[earegister] & mask) + (k->D[dn] & mask));
+    }
+    else
+    {
+      ram_write(mask, k->A[earegister] & mask, ((k->D[dn] & mask) + (ram_read(mask, [k->A[earegister]]))));
+    }
+  }
+  if (eamode == 3) //cas (An)+
+  {
+    if((opmode == 0) || (opmode == 1) || (opmode = 2))
+    {
+      k->D[dn] = (k->D[dn] & !mask) || (ram_read(mask, k->A[earegister] & mask) + (k->D[dn] & mask));
+    }
+    else
+    {
+      ram_write(mask, k->A[earegister] & mask, ((k->D[dn] & mask) + (ram_read(mask, [k->A[earegister]]))));
+    }
+    if (mask = 0xFF)
+    {
+      k->A[earegister] = k->A[earegister] + 1;
+    }
+    else if (mask = 0xFFFF)
+    {
+      k->A[earegister] = k->A[earegister] + 2;
+    }
+    else
+    {
+      k->A[earegister] = k->A[earegister] + 4;
+    }
+  }
+
+  if (eamode == 3) //cas (An)+
+  {
+    if (mask = 0xFF)
+    {
+      k->A[earegister] = k->A[earegister] - 1;
+    }
+    else if (mask = 0xFFFF)
+    {
+      k->A[earegister] = k->A[earegister] - 2;
+    }
+    else
+    {
+      k->A[earegister] = k->A[earegister] - 4;
+    }
+    if((opmode == 0) || (opmode == 1) || (opmode = 2))
+    {
+      k->D[dn] = (k->D[dn] & !mask) || (ram_read(mask, k->A[earegister] & mask) + (k->D[dn] & mask));
+    }
+    else
+    {
+      ram_write(mask, k->A[earegister] & mask, ((k->D[dn] & mask) + (ram_read(mask, [k->A[earegister]]))));
+    }
+  }
 }
+
+
 
 void sub(uint32_t mask, uint32_t* src, uint32_t* dst)
 {
