@@ -30,6 +30,7 @@ void optoram(char *bin, struct cpu *cpu) {
         j += 2;
       }
     }
+    cpu->PC = j;
     for(; j < r; j++) {
       cpu->RAM[j] = buf[j];
     }

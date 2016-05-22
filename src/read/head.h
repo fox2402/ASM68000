@@ -12,6 +12,7 @@
 # include "memory/mem.h"
 # include "../stdcpu.h"
 # include "opcode-ram/get_op.h"
+# include "opcode-ram/read_all.h"
 
 struct label {
   char *subroutine;

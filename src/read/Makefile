@@ -9,7 +9,7 @@ LDFLAGS=
 LDLIBS=
 SRC= test.c read.c main.c
 OBJ=$(SRC:.c=.o)
-OBJ2= memory/mem.o basic/basic.o ../stdcpu.o opcode-ram/get_op.o
+OBJ2= memory/mem.o basic/basic.o ../stdcpu.o opcode-ram/get_op.o opcode-ram/read_all.o
 BIN= read ../../read
 
 all: $(OBJ) $(OBJ2)

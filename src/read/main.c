@@ -17,11 +17,15 @@ struct label *push_label(struct label *l, char *subroutine, uint32_t adress) {
   return l;
 }
 
+
+struct cpu *cp = NULL;
+
 int main(int argc, char *argv[]){
   if (argc > 1) {
     int r;
     FILE *file = fopen(argv[1], "r");
-    struct cpu cpu = *get_cpu();
+    cp = get_cpu();
+    struct cpu cpu = *cp;
     uint32_t pc = 0;
     struct label *l = NULL;
     do { // 1st parsing label
@@ -56,6 +60,8 @@ int main(int argc, char *argv[]){
     get_op(argv[1],"out.bin");
     optoram("out.bin",&cpu);
     DUMPMEM(cpu.RAM, 1000*sizeof(uint16_t));
+    cp = &cpu;
+    read_all();
   }
   else
     err(1,"no arg");
