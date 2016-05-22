@@ -8,7 +8,7 @@ CFLAGS= -Wall -Wextra -std=c99 -O0 -g
 LDFLAGS=
 LDLIBS=
 SRC= stdcpu.c 
-OBJ=$(SRC:.c=.o)
+OBJ=$(SRC:.c=.o) acces_ram.o interpreter.o
 BIN=
 
 all: $(OBJ)
