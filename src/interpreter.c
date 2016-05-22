@@ -1,7 +1,7 @@
 #include<stdint.h>
 #include<stdlib.h>
-#include<stdcpu.h>
-
+#include "stdcpu.h"
+#include "acces_ram.h"
 /*void ccr(uint32_t mask, uint32_t* src, uint32_t* dst, uint32_t rslt)
 {
  struct cpu* k = get_cpu();
