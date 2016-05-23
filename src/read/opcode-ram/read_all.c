@@ -16,21 +16,27 @@ void read_all() {
       if(j <= 3 && j >= 1) {
 	printf("move\n");
 	move(ram_read(0xFFFF0000, i));
-	printf("%04x\n", ram_read(0xFFFF0000, i));
-      }
-      if (j == 13) {
+	printf("%04x\n", ram_read(0xFFFFFFFF, i));
+      } else if (j == 13) {
 	printf("add\n");
 	add(ram_read(0xFFFF0000, i));
         printf("%04x\n", ram_read(0xFFFF0000, i));
+
+      } else if (j == 6) {
+	printf("bcc\n");
+        //bcc(ram_read(0xFFFF0000, i));
+        cpu->PC += 2;
+        printf("%04x\n", ram_read(0xFFFF0000, i));
+      //} else if () {
+
       } else {
         printf("%04x\n", ram_read(0xFFFF0000, i));
 	cpu->PC += 2;
       }
    // }
-   // i += 2;
   }
   printf("Illegal\n");
-  printf("%04x\n", ram_read(0xFFFF0000, i));
+  printf("%04x\n", ram_read(0xFFFF0000, cpu->PC));
   printf("END\n");
   cpu->PC = i;
   DUMPMEM(cpu->RAM, 1000*sizeof(uint16_t));

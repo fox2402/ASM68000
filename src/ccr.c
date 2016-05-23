@@ -1,4 +1,4 @@
-
+#include "ccr.h"
 void ccr(uint32_t n, uint32_t mask) {
   n &= mask;
   struct cpu *cpu = get_cpu();

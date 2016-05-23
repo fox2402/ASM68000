@@ -104,7 +104,7 @@ void move(uint16_t opcode)
   switch (size)
   {
     case(0):
-      mask = 0xFF000000;
+      mask = 0xFFFF0000;
       mask2 = 0x000000FF;
       break;
     case(1):
@@ -148,8 +148,8 @@ void move(uint16_t opcode)
     default:
       err(3,"not supported");
   }
-  temp = opcode & 0xFFFF;
-  temp = temp>>8;
+  temp = opcode & 0x0FFF;
+  temp = temp>>9;
 
   switch((opcode & 0x01B0) >>6 )
   {
@@ -186,6 +186,9 @@ void move(uint16_t opcode)
     default:
       err(3,"not implemented");
   }
+  if(size == 0){
+    mask = 0xFF000000;
+  }
   ram_write(mask, dst2, src);
   ccr(src, mask2);
   cpu->PC += dPC;
@@ -209,7 +212,7 @@ void add(uint16_t opcode)
   if ((opmode == 0) || (opmode == 4))
   {
     mask = 0xFF;
-    mask_ram = 0xFF000000;
+    mask_ram = 0xFFFF0000;
   }
   else if ((opmode == 1) || (opmode == 5))
   {
@@ -258,6 +261,10 @@ void add(uint16_t opcode)
     else
     {
       tmp = ((k->D[(int)dn] & mask) + (ram_read(mask_ram, k->A[(int)earegister])));
+      if (mask == 0xFF) {////////////////
+        mask_ram = 0xFF000000;
+      }
+
       ram_write(mask_ram, k->A[(int)earegister] & mask, tmp);
     }
   }
@@ -271,7 +278,10 @@ void add(uint16_t opcode)
     else
     {
       tmp = ((k->D[(int)dn] & mask) + (ram_read(mask_ram, k->A[(int)earegister])));
-      ram_write(~mask, k->A[(int)earegister] & mask, tmp);
+      if (mask == 0xFF) {////////////////
+        mask_ram = 0xFF000000;
+      }
+      ram_write(mask_ram, k->A[(int)earegister] & mask, tmp);
     }
     if (mask == 0xFF)
     {
@@ -308,6 +318,9 @@ void add(uint16_t opcode)
     else
     {
       tmp = ((k->D[(int)dn] & mask) + (ram_read(mask_ram, k->A[(int)earegister])));
+      if (mask == 0xFF) {////////////////
+        mask_ram = 0xFF000000;
+      }
       ram_write(mask_ram, k->A[(int)earegister] & mask, tmp);
     }
   }
