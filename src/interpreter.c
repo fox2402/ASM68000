@@ -65,6 +65,26 @@ int getMoveSize(uint16_t src)
   }
 
 }
+
+void jsr(uint16_t opcode)
+{
+  struct cpu* k = get_cpu();
+  char earegister = 0;
+  char eamode = 0;
+  eamode = (char)((opcode >> 3) & 0x7);
+  earegister = (char)(opcode & 0x7);
+  ram_write(0xFFFFFFFF, k->A[7] - 4, ram_read(0xFFFFFFFF, k->PC +2));
+  k->A[7] = k->A[7]-4;
+  k->PC = ram_read(0xFFFFFFFF, k->A[(int)earegister]);
+}
+
+void rts(uint16_t opcode)
+{
+  struct cpu* k = get_cpu();
+  k->PC = ram_read(0xFFFFFFFF, k->A[7]);
+  k->A[7] = k->A[7]+4;
+}
+
 void move(uint16_t opcode)
 {
   int size;
