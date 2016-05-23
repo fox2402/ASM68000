@@ -15,7 +15,7 @@ void read_all() {
       j &= 0xF;
       if(j <= 3 && j >= 1) {
 	printf("move\n");
-	//move(ram_read(0xFFFF0000, i));
+	move(ram_read(0xFFFF0000, i));
 	printf("%04x\n", ram_read(0xFFFF0000, i));
       }
       if (j == 13) {
