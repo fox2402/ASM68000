@@ -87,7 +87,7 @@ void add(uint16_t opcode)
   }
   if (eamode == 0) //cas Dn
   {
-    if((opmode == 0) || (opmode == 1) || (opmode = 2))
+    if((opmode == 0) || (opmode == 1) || (opmode == 2))
     {
       k->D[(int)dn] = (k->D[(int)dn] & ~mask) | ((k->D[(int)earegister] & mask) + (k->D[(int)dn] & mask));
     }
@@ -98,7 +98,7 @@ void add(uint16_t opcode)
   }
   if (eamode == 1) //cas An
   {
-    if((opmode == 0) || (opmode == 1) || (opmode = 2))
+    if((opmode == 0) || (opmode == 1) || (opmode == 2))
     {
       k->D[(int)dn] = (k->D[(int)dn] & ~mask) | ((k->A[(int)earegister] & mask) + (k->D[(int)dn] & mask));
     }
@@ -109,7 +109,7 @@ void add(uint16_t opcode)
   }
   if (eamode == 2) //cas (An), demande bidoui!llage ram car en char, ferais demain
   {
-    if((opmode == 0) || (opmode == 1) || (opmode = 2))
+    if((opmode == 0) || (opmode == 1) || (opmode == 2))
     {
       k->D[(int)dn] = (k->D[(int)dn] & ~mask) | (ram_read(mask_ram, k->A[(int)earegister] & mask) + (k->D[(int)dn] & mask));
     }
@@ -120,7 +120,7 @@ void add(uint16_t opcode)
   }
   if (eamode == 3) //cas (An)+
   {
-    if((opmode == 0) || (opmode == 1) || (opmode = 2))
+    if((opmode == 0) || (opmode == 1) || (opmode == 2))
     {
       k->D[(int)dn] = (k->D[(int)dn] & ~mask) | (ram_read(mask_ram, k->A[(int)earegister] & mask) + (k->D[(int)dn] & mask));
     }
@@ -155,7 +155,7 @@ void add(uint16_t opcode)
     {
       k->A[(int)earegister] = k->A[(int)earegister] - 4;
     }
-    if((opmode == 0) || (opmode == 1) || (opmode = 2))
+    if((opmode == 0) || (opmode == 1) || (opmode == 2))
     {
       k->D[(int)dn] = (k->D[(int)dn] & ~mask) | (ram_read(mask_ram, k->A[(int)earegister] & mask) + (k->D[(int)dn] & mask));
     }
