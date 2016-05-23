@@ -162,7 +162,7 @@ void add(uint16_t opcode)
     else
     {
       ram_write(mask_ram, k->A[(int)earegister] & mask, ((k->D[(int)dn] & mask) + (ram_read(mask_ram, k->A[(int)earegister]))));
-    }A
+    }
   }
   if (eamode == 7) //cas #data
   {
@@ -183,7 +183,7 @@ void bcc(uint16_t opcode)
       {
         k->PC = k->PC + ram_read(0xFFFF0000,k->PC + 2);
       }
-      else if (displacement == 0xFF)
+      else if ((unsigned char)displacement == 0xFF)
       {
         k->PC = k->PC + ram_read(0xFFFFFFFF, k->PC + 2);
       }
