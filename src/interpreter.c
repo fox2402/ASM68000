@@ -96,7 +96,7 @@ void move(uint16_t opcode)
       mask2 = mask;
       break;
     default:
-      err("invalid size",2);
+      err(2,"invalid size");
   }
   temp = opcode & 0x0038;
   switch(temp)
@@ -126,7 +126,7 @@ void move(uint16_t opcode)
         dPC = 4;
       break;
     default:
-      err("not supported",3);
+      err(3,"not supported");
   }
   temp = opcode & 0xFFFF;
   temp = temp>>8;
@@ -134,21 +134,23 @@ void move(uint16_t opcode)
   switch(opcode & 0x01B0)
   {
     case(0):
-      dst = &(cpu->D[temp])
+      dst = &(cpu->D[temp]);
       switch(size)
       {
         case(0):
-          dst* = *dst & 0xFFFFFF00;
+          *dst = *dst & 0xFFFFFF00;
           break;
         case(1):
-          dst* = dst* & 0xFFFF0000;
+          *dst = dst* & 0xFFFF0000;
           break;
         case(2):
-          dst* = dst* & 0x00000000;
+          *dst = dst* & 0x00000000;
           break;
       }
+
       dst* += src;
       return;
+
     case(2):
       dst2 = cpu->A[temp];
       break;
@@ -161,7 +163,7 @@ void move(uint16_t opcode)
       dst2 = cpu->A[temp];
       break;
     default:
-      err("not implemented", 3);
+      err(3,"not implemented");
   }
   ram_write(mask, dst2, src);
   ccr(src, mask2);
@@ -207,7 +209,7 @@ void add(uint16_t opcode)
     }
     else
     {
-      k->D[(int)earegister] = (k->D[(int)earegister] & ~mask) | ((k->D[(int)dn] & mask) + (k->D[(int)earegister] & mask));
+      k->D[(int<<<<<<< HEAD)earegister] = (k->D[(int)earegister] & ~mask) | ((k->D[(int)dn] & mask) + (k->D[(int)earegister] & mask));
       tmp = k->D[(int)earegister];
     }
 
