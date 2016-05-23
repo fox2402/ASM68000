@@ -91,7 +91,7 @@ void move(uint16_t opcode)
       mask = 0xFFFF0000;
       mask2 = 0x0000FFFF;
       break;
-    case(2): 
+    case(2):
       mask = 0xFFFFFFFF;
       mask2 = mask;
       break;
@@ -130,7 +130,7 @@ void move(uint16_t opcode)
   }
   temp = opcode & 0xFFFF;
   temp = temp>>8;
-  
+
   switch(opcode & 0x01B0)
   {
     case(0):
@@ -148,7 +148,7 @@ void move(uint16_t opcode)
           break;
       }
       dst* += src;
-      return;    
+      return;
     case(2):
       dst2 = cpu->A[temp];
       break;
@@ -164,6 +164,7 @@ void move(uint16_t opcode)
       err("not implemented", 3);
   }
   ram_write(mask, dst2, src);
+  ccr(src, mask2);
   cpu->PC += dPC;
 }
 
@@ -181,6 +182,7 @@ void add(uint16_t opcode)
   struct cpu* k = get_cpu();
   uint32_t mask = 0;
   uint32_t mask_ram = 0;
+  uint32_t tmp;
   if ((opmode == 0) || (opmode == 4))
   {
     mask = 0xFF;
@@ -201,10 +203,12 @@ void add(uint16_t opcode)
     if((opmode == 0) || (opmode == 1) || (opmode == 2))
     {
       k->D[(int)dn] = (k->D[(int)dn] & ~mask) | ((k->D[(int)earegister] & mask) + (k->D[(int)dn] & mask));
+      tmp = k->D[(int)dn];
     }
     else
     {
       k->D[(int)earegister] = (k->D[(int)earegister] & ~mask) | ((k->D[(int)dn] & mask) + (k->D[(int)earegister] & mask));
+      tmp = k->D[(int)earegister];
     }
 
   }
@@ -213,10 +217,12 @@ void add(uint16_t opcode)
     if((opmode == 0) || (opmode == 1) || (opmode == 2))
     {
       k->D[(int)dn] = (k->D[(int)dn] & ~mask) | ((k->A[(int)earegister] & mask) + (k->D[(int)dn] & mask));
+      tmp = k->D[(int)dn];
     }
     else
     {
       k->A[(int)earegister] = (k->A[(int)earegister] & ~mask) | ((k->D[(int)dn] & mask) + (k->A[(int)earegister] & mask));
+      tmp = k->A[(int)earegister];
     }
   }
   if (eamode == 2) //cas (An), demande bidoui!llage ram car en char, ferais demain
@@ -224,10 +230,12 @@ void add(uint16_t opcode)
     if((opmode == 0) || (opmode == 1) || (opmode == 2))
     {
       k->D[(int)dn] = (k->D[(int)dn] & ~mask) | (ram_read(mask_ram, k->A[(int)earegister] & mask) + (k->D[(int)dn] & mask));
+      tmp = k->D[(int)dn];
     }
     else
     {
-      ram_write(mask_ram, k->A[(int)earegister] & mask, ((k->D[(int)dn] & mask) + (ram_read(mask_ram, k->A[(int)earegister]))));
+      tmp = ((k->D[(int)dn] & mask) + (ram_read(mask_ram, k->A[(int)earegister])));
+      ram_write(mask_ram, k->A[(int)earegister] & mask, tmp);
     }
   }
   if (eamode == 3) //cas (An)+
@@ -235,10 +243,12 @@ void add(uint16_t opcode)
     if((opmode == 0) || (opmode == 1) || (opmode == 2))
     {
       k->D[(int)dn] = (k->D[(int)dn] & ~mask) | (ram_read(mask_ram, k->A[(int)earegister] & mask) + (k->D[(int)dn] & mask));
+      tmp = k->D[(int)dn];
     }
     else
     {
-      ram_write(~mask, k->A[(int)earegister] & mask, ((k->D[(int)dn] & mask) + (ram_read(mask_ram, k->A[(int)earegister]))));
+      tmp = ((k->D[(int)dn] & mask) + (ram_read(mask_ram, k->A[(int)earegister])));
+      ram_write(~mask, k->A[(int)earegister] & mask, tmp);
     }
     if (mask == 0xFF)
     {
@@ -270,15 +280,18 @@ void add(uint16_t opcode)
     if((opmode == 0) || (opmode == 1) || (opmode == 2))
     {
       k->D[(int)dn] = (k->D[(int)dn] & ~mask) | (ram_read(mask_ram, k->A[(int)earegister] & mask) + (k->D[(int)dn] & mask));
+      tmp = k->D[(int)dn];
     }
     else
     {
-      ram_write(mask_ram, k->A[(int)earegister] & mask, ((k->D[(int)dn] & mask) + (ram_read(mask_ram, k->A[(int)earegister]))));
+      tmp = ((k->D[(int)dn] & mask) + (ram_read(mask_ram, k->A[(int)earegister])));
+      ram_write(mask_ram, k->A[(int)earegister] & mask, tmp);
     }
   }
   if (eamode == 7) //cas #data
   {
     k->D[(int)dn] = (k->D[(int)dn] & ~mask) | ((k->D[(int)dn] & mask) + (ram_read(mask_ram, k->PC+2)));
+    tmp = k->D[(int)dn];
     if (mask == 0xFFFF)
     {
       k->PC = k->PC + 2;
@@ -288,6 +301,7 @@ void add(uint16_t opcode)
       k->PC = k->PC + 4;
     }
   }
+  ccr(mask, tmp);
   k->PC = k->PC + 2;
 }
 
