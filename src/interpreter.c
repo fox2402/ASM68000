@@ -1,8 +1,9 @@
 # include<stdint.h>
 # include<stdlib.h>
-# include <err.h> 
+# include <err.h>
 # include"stdcpu.h"
 # include"acces_ram.h"
+# include"ccr.h"
 
 /*void ccr(uint32_t mask, uint32_t* src, uint32_t* dst, uint32_t rslt)
 {
