@@ -205,8 +205,9 @@ void bcc(uint16_t opcode)
     else
     {
       if (displacement == 0x00)
-        k->PC = k->PC + 2;
       {
+        k->PC = k->PC + 2;
+      }
       else if ((unsigned char)displacement == 0xFF)
       {
         k->PC = k->PC + 4;
@@ -234,8 +235,9 @@ void bcc(uint16_t opcode)
     else
     {
       if (displacement == 0x00)
-        k->PC = k->PC + 2;
       {
+        k->PC = k->PC + 2;
+      }
       else if ((unsigned char)displacement == 0xFF)
       {
         k->PC = k->PC + 4;
