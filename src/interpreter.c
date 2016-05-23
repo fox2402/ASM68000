@@ -95,6 +95,7 @@ void add(uint16_t opcode)
     {
       k->D[(int)earegister] = (k->D[(int)earegister] & ~mask) | ((k->D[(int)dn] & mask) + (k->D[(int)earegister] & mask));
     }
+
   }
   if (eamode == 1) //cas An
   {
@@ -166,8 +167,17 @@ void add(uint16_t opcode)
   }
   if (eamode == 7) //cas #data
   {
-   k->D[(int)dn] = (k->D[(int)dn] & ~mask) | ((k->D[(int)dn] & mask) + (ram_read(mask_ram, k->PC+2)));
+    k->D[(int)dn] = (k->D[(int)dn] & ~mask) | ((k->D[(int)dn] & mask) + (ram_read(mask_ram, k->PC+2)));
+    if (mask == 0xFFFF)
+    {
+      k->PC = k->PC + 2;
+    }
+    else if (mask == 0xFFFFFFFF)
+    {
+      k->PC = k->PC + 4;
+    }
   }
+  k->PC = k->PC + 2;
 }
 
 void bcc(uint16_t opcode)
@@ -192,6 +202,17 @@ void bcc(uint16_t opcode)
         k->PC = k->PC + (uint32_t)displacement;
       }
     }
+    else
+    {
+      if (displacement == 0x00)
+        k->PC = k->PC + 2;
+      {
+      else if ((unsigned char)displacement == 0xFF)
+      {
+        k->PC = k->PC + 4;
+      }
+      k->PC = k->PC + 2;
+    }
   }
   else if (condition == 0x6) //bne, branche si z = 0
   {
@@ -209,6 +230,17 @@ void bcc(uint16_t opcode)
       {
         k->PC = k->PC + (uint32_t)displacement;
       }
+    }
+    else
+    {
+      if (displacement == 0x00)
+        k->PC = k->PC + 2;
+      {
+      else if ((unsigned char)displacement == 0xFF)
+      {
+        k->PC = k->PC + 4;
+      }
+      k->PC = k->PC + 2;
     }
   }
 }
