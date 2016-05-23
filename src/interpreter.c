@@ -1,7 +1,8 @@
-#include<stdint.h>
-#include<stdlib.h>
-#include"stdcpu.h"
-#include"acces_ram.h"
+# include<stdint.h>
+# include<stdlib.h>
+# include <err.h> 
+# include"stdcpu.h"
+# include"acces_ram.h"
 
 /*void ccr(uint32_t mask, uint32_t* src, uint32_t* dst, uint32_t rslt)
 {
@@ -48,13 +49,116 @@
  }
 }*/
 
-/*void move(uint32_t mask, uint32_t* src, uint32_t* dst)
+int getMoveSize(uint16_t src)
 {
-  uint32_t dst2 = *src & mask;
-  mask = !mask;
-  *dst = mask & *dst;
-  *dst = *dst | dst2;
-}*/
+  switch (src)
+  {
+    case(1):
+      return 0;
+    case(2):
+      return 2;
+    case(3):
+      return 1;
+    default:
+      return -1;
+  }
+
+}
+void move(uint16_t opcode)
+{
+  int size;
+  uint16_t  temp;
+  uint32_t mask;
+  uint32_t mask2;
+  uint32_t  src;
+  uint32_t* dst;
+  uint32_t  dst2;
+  struct cpu* cpu;
+
+  cpu = get_cpu();
+  temp = opcode>>12;
+
+  size = getMoveSize(temp);
+  switch (size)
+  {
+    case(0):
+      mask = 0xFF000000;
+      mask2 = 0x000000FF;
+      break;
+    case(1):
+      mask = 0xFFFF0000;
+      mask2 = 0x0000FFFF;
+      break;
+    case(2): 
+      mask = 0xFFFFFFFF;
+      mask2 = mask;
+      break;
+    default:
+      err("invalid size",2);
+  }
+  temp = opcode & 0x0038;
+  switch(temp)
+  {
+    case(0):
+      src = cpu->D[opcode & 0x0007] & mask2;
+      break;
+    case(1):
+      src = cpu->A[opcode & 0x0007] & mask2;
+      break;
+    case(2):
+      src = ram_read(mask, cpu->A[opcode & 0x0007]);
+      break;
+    case(3):
+      src = ram_read(mask, cpu->A[opcode & 0x0007]);
+      cpu->A[opcode & 0x0007] += 1;
+      break;
+    case(4):
+      cpu->A[opcode & 0x007] -= 1;
+      src = ram_read(mask, cpu->[opcode & 0x0007]);
+      break;
+    case(7):
+      src = ram_read(mask, (cpu->PC) + 2);
+      break;
+    default:
+      err("not supported",3);
+  }
+  temp = opcode & 0xFFFF;
+  temp = temp>>8;
+  
+  switch(opcode & 0x01B0)
+  {
+    case(0):
+      dst = &(cpu->D[temp])
+      switch(size)
+      {
+        case(0):
+          dst* = *dst & 0xFFFFFF00;
+          break;
+        case(1):
+          dst* = dst* & 0xFFFF0000;
+          break;
+        case(2):
+          dst* = dst* & 0x00000000;
+          break;
+      }
+      dst* += src;
+      return;    
+    case(2):
+      dst2 = cpu->A[temp];
+      break;
+    case(3):
+      dst2 = cpu->A[temp];
+      cpu->A[temp] += 1;
+      break;
+    case(4):
+      cpu->A[temp] -= 1;
+      dst2 = cpu->A[temp];
+      break;
+    default:
+      err("not implemented", 3);
+  }
+  ram_write(mask, dst2, src); 
+}
 
 void add(uint16_t opcode)
 {
