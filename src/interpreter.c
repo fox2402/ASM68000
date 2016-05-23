@@ -191,7 +191,7 @@ void add(uint16_t opcode)
   }
   if (eamode == 0) //cas Dn
   {
-    if((opmode == 0) || (opmode == 1) || (opmode = 2))
+    if((opmode == 0) || (opmode == 1) || (opmode == 2))
     {
       k->D[(int)dn] = (k->D[(int)dn] & ~mask) | ((k->D[(int)earegister] & mask) + (k->D[(int)dn] & mask));
     }
@@ -199,10 +199,11 @@ void add(uint16_t opcode)
     {
       k->D[(int)earegister] = (k->D[(int)earegister] & ~mask) | ((k->D[(int)dn] & mask) + (k->D[(int)earegister] & mask));
     }
+
   }
   if (eamode == 1) //cas An
   {
-    if((opmode == 0) || (opmode == 1) || (opmode = 2))
+    if((opmode == 0) || (opmode == 1) || (opmode == 2))
     {
       k->D[(int)dn] = (k->D[(int)dn] & ~mask) | ((k->A[(int)earegister] & mask) + (k->D[(int)dn] & mask));
     }
@@ -213,7 +214,7 @@ void add(uint16_t opcode)
   }
   if (eamode == 2) //cas (An), demande bidoui!llage ram car en char, ferais demain
   {
-    if((opmode == 0) || (opmode == 1) || (opmode = 2))
+    if((opmode == 0) || (opmode == 1) || (opmode == 2))
     {
       k->D[(int)dn] = (k->D[(int)dn] & ~mask) | (ram_read(mask_ram, k->A[(int)earegister] & mask) + (k->D[(int)dn] & mask));
     }
@@ -224,7 +225,7 @@ void add(uint16_t opcode)
   }
   if (eamode == 3) //cas (An)+
   {
-    if((opmode == 0) || (opmode == 1) || (opmode = 2))
+    if((opmode == 0) || (opmode == 1) || (opmode == 2))
     {
       k->D[(int)dn] = (k->D[(int)dn] & ~mask) | (ram_read(mask_ram, k->A[(int)earegister] & mask) + (k->D[(int)dn] & mask));
     }
@@ -259,7 +260,7 @@ void add(uint16_t opcode)
     {
       k->A[(int)earegister] = k->A[(int)earegister] - 4;
     }
-    if((opmode == 0) || (opmode == 1) || (opmode = 2))
+    if((opmode == 0) || (opmode == 1) || (opmode == 2))
     {
       k->D[(int)dn] = (k->D[(int)dn] & ~mask) | (ram_read(mask_ram, k->A[(int)earegister] & mask) + (k->D[(int)dn] & mask));
     }
@@ -270,11 +271,20 @@ void add(uint16_t opcode)
   }
   if (eamode == 7) //cas #data
   {
-   k->D[(int)dn] = (k->D[(int)dn] & ~mask) | ((k->D[(int)dn] & mask) + (ram_read(mask_ram, k->PC+2));
+    k->D[(int)dn] = (k->D[(int)dn] & ~mask) | ((k->D[(int)dn] & mask) + (ram_read(mask_ram, k->PC+2)));
+    if (mask == 0xFFFF)
+    {
+      k->PC = k->PC + 2;
+    }
+    else if (mask == 0xFFFFFFFF)
+    {
+      k->PC = k->PC + 4;
+    }
   }
+  k->PC = k->PC + 2;
 }
 
-void bcc(uint32_t opcode)
+void bcc(uint16_t opcode)
 {
   char displacement = (char)opcode;
   char condition = (char)((opcode >> 8) & 0xF);
@@ -287,7 +297,7 @@ void bcc(uint32_t opcode)
       {
         k->PC = k->PC + ram_read(0xFFFF0000,k->PC + 2);
       }
-      else if (displacement == 0xFF)
+      else if ((unsigned char)displacement == 0xFF)
       {
         k->PC = k->PC + ram_read(0xFFFFFFFF, k->PC + 2);
       }
@@ -295,6 +305,17 @@ void bcc(uint32_t opcode)
       {
         k->PC = k->PC + (uint32_t)displacement;
       }
+    }
+    else
+    {
+      if (displacement == 0x00)
+        k->PC = k->PC + 2;
+      {
+      else if ((unsigned char)displacement == 0xFF)
+      {
+        k->PC = k->PC + 4;
+      }
+      k->PC = k->PC + 2;
     }
   }
   else if (condition == 0x6) //bne, branche si z = 0
@@ -305,7 +326,7 @@ void bcc(uint32_t opcode)
       {
         k->PC = k->PC + ram_read(0xFFFF0000,k->PC + 2);
       }
-      else if (displacement == 0xFF)
+      else if ((unsigned char)displacement == 0xFF)
       {
         k->PC = k->PC + ram_read(0xFFFFFFFF, k->PC + 2);
       }
@@ -313,6 +334,17 @@ void bcc(uint32_t opcode)
       {
         k->PC = k->PC + (uint32_t)displacement;
       }
+    }
+    else
+    {
+      if (displacement == 0x00)
+        k->PC = k->PC + 2;
+      {
+      else if ((unsigned char)displacement == 0xFF)
+      {
+        k->PC = k->PC + 4;
+      }
+      k->PC = k->PC + 2;
     }
   }
 }
