@@ -81,7 +81,7 @@ void add(uint16_t opcode)
     mask_ram = 0xFFFF0000;
   }
   else
-A  {
+  {
     mask = 0xFFFFFFFF;
     mask_ram = 0xFFFFFFFF;
   }
@@ -201,7 +201,7 @@ void bcc(uint16_t opcode)
       {
         k->PC = k->PC + ram_read(0xFFFF0000,k->PC + 2);
       }
-      else if (displacement == 255)
+      else if ((unsigned char)displacement == 0xFF)
       {
         k->PC = k->PC + ram_read(0xFFFFFFFF, k->PC + 2);
       }
