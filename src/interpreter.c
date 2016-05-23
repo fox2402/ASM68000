@@ -81,7 +81,7 @@ void add(uint16_t opcode)
     mask_ram = 0xFFFF0000;
   }
   else
-  {
+A  {
     mask = 0xFFFFFFFF;
     mask_ram = 0xFFFFFFFF;
   }
@@ -162,15 +162,15 @@ void add(uint16_t opcode)
     else
     {
       ram_write(mask_ram, k->A[(int)earegister] & mask, ((k->D[(int)dn] & mask) + (ram_read(mask_ram, k->A[(int)earegister]))));
-    }
+    }A
   }
   if (eamode == 7) //cas #data
   {
-   k->D[(int)dn] = (k->D[(int)dn] & ~mask) | ((k->D[(int)dn] & mask) + (ram_read(mask_ram, k->PC+2));
+   k->D[(int)dn] = (k->D[(int)dn] & ~mask) | ((k->D[(int)dn] & mask) + (ram_read(mask_ram, k->PC+2)));
   }
 }
 
-void bcc(uint32_t opcode)
+void bcc(uint16_t opcode)
 {
   char displacement = (char)opcode;
   char condition = (char)((opcode >> 8) & 0xF);
@@ -201,7 +201,7 @@ void bcc(uint32_t opcode)
       {
         k->PC = k->PC + ram_read(0xFFFF0000,k->PC + 2);
       }
-      else if (displacement == 0xFF)
+      else if (displacement == 255)
       {
         k->PC = k->PC + ram_read(0xFFFFFFFF, k->PC + 2);
       }
