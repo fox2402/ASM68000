@@ -140,10 +140,10 @@ void move(uint16_t opcode)
           *dst = *dst & 0xFFFFFF00;
           break;
         case(1):
-          *dst = dst* & 0xFFFF0000;
+          *dst = *dst & 0xFFFF0000;
           break;
         case(2):
-          *dst = dst* & 0x00000000;
+          *dst = *dst & 0x00000000;
           break;
       }
       *dst += src;
