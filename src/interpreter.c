@@ -138,7 +138,7 @@ void add(uint16_t opcode)
     }
   }
 
-  if (eamode == 3) //cas (An)+
+  if (eamode == 4) //cas (An)+
   {
     if (mask == 0xFF)
     {
