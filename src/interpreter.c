@@ -68,6 +68,7 @@ int getMoveSize(uint16_t src)
 void move(uint16_t opcode)
 {
   int size;
+  uint32_t dPC;
   uint16_t  temp;
   uint32_t mask;
   uint32_t mask2;
@@ -78,7 +79,7 @@ void move(uint16_t opcode)
 
   cpu = get_cpu();
   temp = opcode>>12;
-
+  dPC = 2;
   size = getMoveSize(temp);
   switch (size)
   {
@@ -119,6 +120,10 @@ void move(uint16_t opcode)
       break;
     case(7):
       src = ram_read(mask, (cpu->PC) + 2);
+      if(size < 1)
+        dPC = 6;
+      else
+        dPC = 4;
       break;
     default:
       err("not supported",3);
@@ -158,7 +163,8 @@ void move(uint16_t opcode)
     default:
       err("not implemented", 3);
   }
-  ram_write(mask, dst2, src); 
+  ram_write(mask, dst2, src);
+  cpu->PC += dPC;
 }
 
 void add(uint16_t opcode)
