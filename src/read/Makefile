@@ -10,16 +10,17 @@ LDLIBS=
 SRC= test.c read.c main.c
 OBJ=$(SRC:.c=.o)
 OBJ2= memory/mem.o basic/basic.o ../stdcpu.o opcode-ram/get_op.o opcode-ram/read_all.o ../acces_ram.o
+OBJ3= ../interpreter.o
 BIN= read ../../read
 
-all: $(OBJ) $(OBJ2)
-	$(CC) $(CFLAGS) -o read $(OBJ) $(OBJ2)
+all: $(OBJ) $(OBJ2) $(OBJ3)
+	$(CC) $(CFLAGS) -o read $(OBJ) $(OBJ2) $(OBJ3)
 	cp read ../../
 
 check: clean all
 	./read file.asm
  
 clean:
-	rm -f *.o $(BIN) $(OBJ2)
+	rm -f *.o $(BIN) $(OBJ2) $(OBJ3)
  
 # END

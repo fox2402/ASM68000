@@ -1,6 +1,6 @@
 #include "acces_ram.h"
 
-uint32_t ram_read(uint32_t mask, int add)
+uint32_t ram_read(uint32_t mask, uint32_t add)
 {
   struct cpu* k = get_cpu();
   int i = 0;
@@ -29,7 +29,7 @@ uint32_t ram_read(uint32_t mask, int add)
   return (ret & mask) >> n;
 }
 
-void ram_write(uint32_t mask, int add, uint32_t new)
+void ram_write(uint32_t mask, uint32_t add, uint32_t new)
 {
   struct cpu* k = get_cpu();
   int i = 0;

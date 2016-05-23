@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
     //cpu.RAM[1] = 160; // TEST
     get_op(argv[1],"out.bin");
     optoram("out.bin",&cpu);
-    DUMPMEM(cpu.RAM, 1000*sizeof(uint16_t));
+//    DUMPMEM(cpu.RAM, 1000*sizeof(uint16_t));
     cp = &cpu;
     read_all();
   }

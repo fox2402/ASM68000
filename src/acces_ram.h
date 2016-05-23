@@ -3,7 +3,7 @@
 
 #include "read/head.h"
 
-uint32_t ram_read(uint32_t mask, int add);
-void ram_write(uint32_t mask, int add, uint32_t new);
+uint32_t ram_read(uint32_t mask, uint32_t add);
+void ram_write(uint32_t mask, uint32_t add, uint32_t new);
 
 #endif
