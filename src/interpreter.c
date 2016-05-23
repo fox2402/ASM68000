@@ -116,7 +116,7 @@ void move(uint16_t opcode)
       break;
     case(4):
       cpu->A[opcode & 0x007] -= 1;
-      src = ram_read(mask, cpu->[opcode & 0x0007]);
+      src = ram_read(mask, cpu->A[opcode & 0x0007]);
       break;
     case(7):
       src = ram_read(mask, (cpu->PC) + 2);
