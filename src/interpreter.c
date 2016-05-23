@@ -99,7 +99,7 @@ void move(uint16_t opcode)
       err(2,"invalid size");
   }
   temp = opcode & 0x0038;
-  switch(temp)
+  switch(temp>>3)
   {
     case(0):
       src = cpu->D[opcode & 0x0007] & mask2;
@@ -120,7 +120,7 @@ void move(uint16_t opcode)
       break;
     case(7):
       src = ram_read(mask, (cpu->PC) + 2);
-      if(size < 1)
+      if(size > 1)
         dPC = 6;
       else
         dPC = 4;
@@ -131,7 +131,7 @@ void move(uint16_t opcode)
   temp = opcode & 0xFFFF;
   temp = temp>>8;
 
-  switch(opcode & 0x01B0)
+  switch((opcode & 0x01B0) >>6 )
   {
     case(0):
       dst = &(cpu->D[temp]);
@@ -148,7 +148,8 @@ void move(uint16_t opcode)
           break;
       }
 
-      dst* += src;
+      *dst |= src;
+      cpu->PC += dPC;
       return;
 
     case(2):
@@ -209,7 +210,7 @@ void add(uint16_t opcode)
     }
     else
     {
-      k->D[(int<<<<<<< HEAD)earegister] = (k->D[(int)earegister] & ~mask) | ((k->D[(int)dn] & mask) + (k->D[(int)earegister] & mask));
+      k->D[(int)earegister] = (k->D[(int)earegister] & ~mask) | ((k->D[(int)dn] & mask) + (k->D[(int)earegister] & mask));
       tmp = k->D[(int)earegister];
     }
 
