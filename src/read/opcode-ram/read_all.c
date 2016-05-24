@@ -14,26 +14,26 @@ void read_all() {
       j >>= 4;
       j &= 0xF;
       if(j <= 3 && j >= 1) {
-	printf("move\n");
+	printf("MOVE\n");
 	move(ram_read(0xFFFF0000, i));
 	printf("%04x\n", ram_read(0xFFFF0000, i));
       } else if (j == 13) {
-	printf("add\n");
+	printf("ADD\n");
 	add(ram_read(0xFFFF0000, i));
         printf("%04x\n", ram_read(0xFFFF0000, i));
 
       } else if (j == 6) {
-	printf("bcc\n");
+	printf("BCC\n");
         //bcc(ram_read(0xFFFF0000, i));
         cpu->PC += 2;
         printf("%04x\n", ram_read(0xFFFF0000, i));
       } else if (cpu->RAM[i] == 0x4E) {
 	if(cpu->RAM[i+1] == 0x75) {
-	  printf("rts\n");
+	  printf("RTS\n");
 	  rts(ram_read(0xFFFF0000, i));
           printf("%04x\n", ram_read(0xFFFF0000, i));
         } else if ((unsigned char) (cpu->RAM[i+1] & 0xFF) == 0xB9) {
-	  printf("jsr\n");
+	  printf("JSR\n");
 	  jsr(ram_read(0xFFFF0000, i));
           printf("%04x\n", ram_read(0xFFFF0000, i));
         } else {
