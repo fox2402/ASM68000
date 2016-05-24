@@ -1,7 +1,7 @@
   org $500
 main
-\loop 
-  add.l #1,d1
-  add.b d1,(a0)
+\loop
+  add.w #1,d0
+  add.b #1,d1
   bne \loop
   illegal

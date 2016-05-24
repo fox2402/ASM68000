@@ -21,6 +21,7 @@ struct cpu* get_cpu(void)
     {
       main_core->RAM[i] = 0;
     }
+    main_core->A[7] = i;
   return main_core;
   } else {
     return cp;
